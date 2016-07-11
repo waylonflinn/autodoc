@@ -2,31 +2,79 @@
 <html>
 
 <head>
-    <title>{{name}}</title>
+    <link rel="icon" href="/favicon.png">
+    <!-- Required meta tags for bootstrap -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <!-- meta tags for google sign in -->
+    <meta name="google-signin-scope" content="profile email">
+    <meta name="google-signin-client_id" content="605746518719-2stbim48tmtpfncphtfjlo70tiem12um.apps.googleusercontent.com">
+
+	<title>Dataship - Be Moved By Data</title>
+	<script src="/js/aws-sdk-2.3.3.min.js"></script>
+	<script src="/js/nprogress.js"></script>
+
 
     <link rel="stylesheet" type="text/css" href="docs.css" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css"/>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"/>
+
+
+	<link rel="stylesheet" href="/css/login.css"/>
+    <link rel='stylesheet' href='/css/style.css' />
+
     <link rel="stylesheet" type="text/css" href="examples.css" />
     <link rel="stylesheet" type="text/css" href="highlight.css" />
-    <script src="//pivotal.github.io/jasmine/lib/jasmine-1.3.1/jasmine.js"></script>
-    <script src="//lodash.com/_js/lodash.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jasmine/1.3.1/jasmine.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.min.js"></script>
     <script src="//benchmarkjs.com/_js/benchmark.js"></script>
     <script src="//code.jquery.com/jquery-1.10.1.min.js"></script>
     <script src="//code.highcharts.com/highcharts.js"></script>
     <script src="//danieltao.com/HighTables/hightables.js"></script>
     <script type="text/javascript" src="utils.js"></script>
 
-    {{#javascripts}}
-    <script type="text/{{{language}}}" src="{{{src}}}"></script>
-    {{/javascripts}}
-
-    <script type="text/javascript" src="defaults.js"></script>
-
     <script type="text/javascript">
       var benchmarks = {};
     </script>
+    <style>
+        body {
+            background-color: #fafafa;
+            padding-top: 70px;
+        }
+        .source-examples {
+            border: 1px solid #ddd;
+            overflow: visible;
+        }
+        pre span.line.passed:before {
+            left: -25px;
+        }
+        h3 {
+            color: #6e6e6e;
+        }
+        h1, h2, h3 {
+            margin-top: 21px;
+            margin-bottom: 10.5px;
+        }
+        .search {
+            margin-bottom: 15px;
+        }
+        nav {
+            border-right: 1px solid #ddd;
+        }
+
+        section.constructor:nth-of-type(n+2),
+        section.method:nth-of-type(n+2),
+        section.typedef:nth-of-type(n+2) {
+            margin-top: 20px;
+            padding-top: 40px; /* make links place nice with header bar */
+        }
+    </style>
 </head>
 
 <body>
+    <div id="header">
+    </div>
     <main>
         <header>
             <h1>{{name}}</h1>
@@ -41,15 +89,14 @@
 
         <div class="search">
             <fieldset>
-                <legend>Search</legend>
-                <input type="text" name="search" placeholder="Start typing the name of a function or type" />
+                <h3>search</h3>
+                <input type="text" name="search" placeholder="Start typing the name of a Function" />
             </fieldset>
         </div>
 
         <div class="layout">
             <div class="index">
                 <nav>
-                    <h2>Functions</h2>
                     <ul>
                         {{#namespaces}}
                         {{^excludeFromDocs}}
@@ -71,7 +118,7 @@
                     </ul>
 
                     {{#hasTypes}}
-                    <h2>Types</h2>
+                    <h2>types</h2>
                     <ul>
                         {{#types}}
                         {{^excludeFromDocs}}
@@ -97,7 +144,7 @@
 
                     {{#hasSignature}}
                     <div class="signature">
-                        <h3>Signature</h3>
+                        <h3>signature</h3>
 
                         <pre>{{{highlightedSignature}}}</pre>
 
@@ -140,7 +187,7 @@
 
                     {{#hasExamples}}
                     <div class="examples">
-                        <h3>Examples</h3>
+                        <h3>examples</h3>
 
                         {{#examples}}
                         <pre class="source-examples" id="examples-{{identifier}}">{{{highlightedCode}}}</pre>
@@ -150,7 +197,7 @@
 
                     {{#hasBenchmarks}}
                     <div class="perf">
-                        <h3>Benchmarks</h3>
+                        <h3>benchmarks</h3>
 
                         {{#benchmarks}}
                         <pre class="cm-s-default">{{{highlightedCode}}}</pre>
@@ -208,6 +255,25 @@
     </main>
 
     <script type="text/javascript" src="docs.js"></script>
+    {{#javascripts}}
+    <script type="text/{{{language}}}" src="{{{src}}}"></script>
+    {{/javascripts}}
+    <script>
+		// google sign in init
+		function googleButtonRender() {
+			gapi.signin2.render('google-sign-in', {
+				'scope': 'profile email',
+				'width': 240,
+				'height': 50,
+				'longtitle': true,
+				'theme': 'light',
+				'onsuccess': onSignIn
+			});
+		}
+
+    </script>
+
+    <script src="https://apis.google.com/js/platform.js?onload=googleButtonRender" async defer></script>
 </body>
 
 </html>
